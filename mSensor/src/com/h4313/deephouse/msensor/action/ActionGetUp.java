@@ -8,14 +8,17 @@ import java.util.Set;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.housemodel.RoomConstants;
+import com.h4313.deephouse.msensor.controller.Controller;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.sensor.SensorType;
 
 public class ActionGetUp implements Action
 {
 	private List<Sensor<Object>> sensorList;
+
+	private static volatile ActionGetUp instance = null;
 	
-	public ActionGetUp()
+	private ActionGetUp()
 	{
 		// Initialisation
 		this.sensorList = new ArrayList<Sensor<Object>>();
@@ -37,6 +40,21 @@ public class ActionGetUp implements Action
 			}
 		}
 	}
+	
+	/**
+     * Méthode permettant de renvoyer une instance de la classe Singleton
+     * @return Retourne l'instance du singleton.
+     */
+    public final static ActionGetUp getInstance() {
+        if (ActionGetUp.instance == null) {
+           synchronized(ActionGetUp.class) {
+             if (ActionGetUp.instance == null) {
+            	 ActionGetUp.instance = new ActionGetUp();
+             }
+           }
+        }
+        return ActionGetUp.instance;
+    }
 	
 	public List<Sensor<Object>> getSensorList()
 	{

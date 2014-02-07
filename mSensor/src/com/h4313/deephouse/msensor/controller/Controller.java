@@ -1,10 +1,12 @@
 package com.h4313.deephouse.msensor.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.h4313.deephouse.msensor.action.Action;
 import com.h4313.deephouse.msensor.action.ActionGetUp;
 import com.h4313.deephouse.sensor.Sensor;
+import com.h4313.deephouse.util.DeepHouseCalendar;
 
 
 public class Controller extends Thread
@@ -43,14 +45,22 @@ public class Controller extends Thread
     private void runSimulator()
     {
     	Action act = null;
-//    	switch(0)
+    	
+//    	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
+//    	switch(cal.get(Calendar.HOUR_OF_DAY))
 //    	{
-//    		case 0:
-//    			act = new ActionGetUp();
+//    		case 7:
+//    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+//    				act = ActionGetUp.getInstance();
+//    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+//    				act = ActionBreakFast.getInstance();
 //    		break;
 //    		default:
+//    			act = ActionWorkOffice.getInstance();
 //    	}
-    	act = new ActionGetUp();
+    	
+    	act = ActionGetUp.getInstance();
+    	
     	
     	if(act != null)
     	{

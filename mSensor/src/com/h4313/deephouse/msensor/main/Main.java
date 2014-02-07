@@ -34,7 +34,7 @@ public class Main
 				room.addActuator(String.valueOf(id++), ActuatorType.LIGHTCONTROL);
 				room.addActuator(String.valueOf(id++), ActuatorType.AIRCONDITION);
 				room.addActuator(String.valueOf(id++), ActuatorType.RADIATOR);
-				room.addActuator(String.valueOf(id++), ActuatorType.WINDOWCLOSER_1);
+				room.addActuator(String.valueOf(id++), ActuatorType.WINDOWCLOSER);
 			}
 		} 
 		catch(Exception e)
