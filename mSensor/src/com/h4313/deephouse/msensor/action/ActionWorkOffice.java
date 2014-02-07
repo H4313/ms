@@ -23,9 +23,9 @@ public final class ActionWorkOffice implements Action
 		this.sensorList = new ArrayList<Sensor<Object>>();
 		
 		// Process
-		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_OFFICE);
+		Room office = House.getInstance().getRooms().get(RoomConstants.ID_OFFICE);
 		
-		Set<Map.Entry<String, Sensor<Object>>> set = bedRoom.getSensors().entrySet();
+		Set<Map.Entry<String, Sensor<Object>>> set = office.getSensors().entrySet();
 
 		for(Map.Entry<String, Sensor<Object>> entry : set)
 		{

@@ -7,6 +7,7 @@ import com.h4313.deephouse.msensor.action.Action;
 import com.h4313.deephouse.msensor.action.ActionBreakFast;
 import com.h4313.deephouse.msensor.action.ActionGetOut;
 import com.h4313.deephouse.msensor.action.ActionGetUp;
+import com.h4313.deephouse.msensor.action.ActionSleep;
 import com.h4313.deephouse.msensor.action.ActionWorkOffice;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.util.DeepHouseCalendar;
@@ -61,11 +62,12 @@ public final class Controller extends Thread
     		case 9: case 10:
     			act = ActionWorkOffice.getInstance();
     		break;
+    		case 11:
+    			act = ActionSleep.getInstance();
+    		break;
     		default:
     			act = ActionGetOut.getInstance();
     	}
-    	
-//    	act = ActionGetUp.getInstance();
     	
     	
     	if(act != null)
