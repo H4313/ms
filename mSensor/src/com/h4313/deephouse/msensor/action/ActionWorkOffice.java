@@ -11,19 +11,19 @@ import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.sensor.SensorType;
 
-public final class ActionGetUp implements Action
+public final class ActionWorkOffice implements Action
 {
 	private List<Sensor<Object>> sensorList;
 
-	private static volatile ActionGetUp instance = null;
+	private static volatile ActionWorkOffice instance = null;
 	
-	private ActionGetUp()
+	private ActionWorkOffice()
 	{
 		// Initialisation
 		this.sensorList = new ArrayList<Sensor<Object>>();
 		
 		// Process
-		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_BEDROOM);
+		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_OFFICE);
 		
 		Set<Map.Entry<String, Sensor<Object>>> set = bedRoom.getSensors().entrySet();
 
@@ -35,6 +35,11 @@ public final class ActionGetUp implements Action
 			if(sensor.getType().equals(SensorType.LIGHT))
 			{
 				sensor.setLastValue(true);
+				this.sensorList.add(sensor);
+			} // TEMP 21C
+			else if(sensor.getType().equals(SensorType.TEMPERATURE))
+			{
+				sensor.setLastValue(21);
 				this.sensorList.add(sensor);
 			} // PRESENCE ON
 			else if(sensor.getType().equals(SensorType.PRESENCE))
@@ -49,15 +54,15 @@ public final class ActionGetUp implements Action
      * Méthode permettant de renvoyer une instance de la classe Singleton
      * @return Retourne l'instance du singleton.
      */
-    public final static ActionGetUp getInstance() {
-        if (ActionGetUp.instance == null) {
-           synchronized(ActionGetUp.class) {
-             if (ActionGetUp.instance == null) {
-            	 ActionGetUp.instance = new ActionGetUp();
+    public final static ActionWorkOffice getInstance() {
+        if (ActionWorkOffice.instance == null) {
+           synchronized(ActionWorkOffice.class) {
+             if (ActionWorkOffice.instance == null) {
+            	 ActionWorkOffice.instance = new ActionWorkOffice();
              }
            }
         }
-        return ActionGetUp.instance;
+        return ActionWorkOffice.instance;
     }
 	
 	public List<Sensor<Object>> getSensorList()

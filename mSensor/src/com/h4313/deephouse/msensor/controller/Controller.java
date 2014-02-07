@@ -4,12 +4,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.h4313.deephouse.msensor.action.Action;
+import com.h4313.deephouse.msensor.action.ActionBreakFast;
+import com.h4313.deephouse.msensor.action.ActionGetOut;
 import com.h4313.deephouse.msensor.action.ActionGetUp;
+import com.h4313.deephouse.msensor.action.ActionWorkOffice;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.util.DeepHouseCalendar;
 
 
-public class Controller extends Thread
+public final class Controller extends Thread
 {	
 	private volatile boolean alive;
 	
@@ -46,20 +49,23 @@ public class Controller extends Thread
     {
     	Action act = null;
     	
-//    	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
-//    	switch(cal.get(Calendar.HOUR_OF_DAY))
-//    	{
-//    		case 7:
-//    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
-//    				act = ActionGetUp.getInstance();
-//    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
-//    				act = ActionBreakFast.getInstance();
-//    		break;
-//    		default:
-//    			act = ActionWorkOffice.getInstance();
-//    	}
+    	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
+    	switch(cal.get(Calendar.HOUR_OF_DAY))
+    	{
+    		case 7:
+    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+    				act = ActionGetUp.getInstance();
+    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+    				act = ActionBreakFast.getInstance();
+    		break;
+    		case 9: case 10:
+    			act = ActionWorkOffice.getInstance();
+    		break;
+    		default:
+    			act = ActionGetOut.getInstance();
+    	}
     	
-    	act = ActionGetUp.getInstance();
+//    	act = ActionGetUp.getInstance();
     	
     	
     	if(act != null)
