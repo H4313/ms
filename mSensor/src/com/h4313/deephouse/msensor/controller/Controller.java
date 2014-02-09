@@ -11,6 +11,7 @@ import com.h4313.deephouse.msensor.action.ActionSleep;
 import com.h4313.deephouse.msensor.action.ActionWorkOffice;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.util.DeepHouseCalendar;
+import com.h4313.deephouse.vue.MainVue;
 
 
 public final class Controller extends Thread
@@ -23,11 +24,14 @@ public final class Controller extends Thread
 	
 	private ServerSender serverSender;
 	
+	private MainVue vueSensor=null;
+	
     /**
      * Constructeur de l'objet.
      */
     private Controller() {
         super();
+        vueSensor=MainVue.init(MainVue.VUE_SENSOR);
         this.alive = true;
     }
 
@@ -108,6 +112,7 @@ public final class Controller extends Thread
 				Thread.sleep(1000);
 
 				runSimulator();
+				vueSensor.refresh(); //Met à jour la vue 
 			}
 		}
 		catch(Exception e)
