@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
+import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.msensor.action.ActionBreakFast;
@@ -101,8 +102,12 @@ public final class Controller extends Thread
 				
 				if(message != null)
 				{
-					// TODO : Que faire des messages ?
-					System.out.println("Message : " + message);
+					System.out.println("Message recu : " + message);
+					
+					Frame frame = new Frame(message);
+					House.getInstance().updateActuator(frame);
+					
+					// TODO METTRE A JOUR LES CAPTEURS EN FONCTION DES ACTIONNEURS
 				}
 				else
 				{
@@ -112,7 +117,7 @@ public final class Controller extends Thread
 				Thread.sleep(1000);
 
 				runSimulator();
-				vueSensor.refresh(); //Met � jour la vue 
+				vueSensor.refresh(); // Met a jour la vue 
 			}
 		}
 		catch(Exception e)
