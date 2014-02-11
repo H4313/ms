@@ -43,10 +43,13 @@ public class Main
 		{
 			e.printStackTrace();
 		}*/
-		
+
+		// Initialisation de la maison depuis persistance
 		RoomDAO roomDAO = new RoomDAO();
 		List<Room> rooms = roomDAO.findAll();
 		House.getInstance().setRooms(rooms);
+		
+		
 		// Initialisation du reseau
 		Controller.getInstance().initServerListener(Integer.valueOf(args[0]).intValue());
 		Controller.getInstance().initSensorSender(args[1], Integer.valueOf(args[2]).intValue());

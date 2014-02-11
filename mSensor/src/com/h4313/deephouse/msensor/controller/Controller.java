@@ -1,9 +1,11 @@
 package com.h4313.deephouse.msensor.controller;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import com.h4313.deephouse.msensor.action.Action;
+import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.msensor.action.ActionBreakFast;
 import com.h4313.deephouse.msensor.action.ActionGetOut;
 import com.h4313.deephouse.msensor.action.ActionGetUp;
@@ -52,38 +54,36 @@ public final class Controller extends Thread
     
     private void runSimulator()
     {
-    	Action act = null;
-    	
     	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
     	switch(cal.get(Calendar.HOUR_OF_DAY))
     	{
     		case 7:
     			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
-    				act = ActionGetUp.getInstance();
+    				ActionGetUp.getInstance().run();
     			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
-    				act = ActionBreakFast.getInstance();
+    				ActionBreakFast.getInstance().run();
     		break;
     		case 9: case 10:
-    			act = ActionWorkOffice.getInstance();
+    			ActionWorkOffice.getInstance().run();
     		break;
     		case 11:
-    			act = ActionSleep.getInstance();
+    			ActionSleep.getInstance().run();
     		break;
     		default:
-    			act = ActionGetOut.getInstance();
+    			ActionGetOut.getInstance();
     	}
-    	
-    	
-    	if(act != null)
-    	{
-			List<Sensor<Object>> sensorList = act.getSensorList();
-			System.out.println("SensorList = " + sensorList);
-			for(Sensor<Object> sensor : sensorList)
+
+		for(Room room : House.getInstance().getRooms())
+		{
+			Set<Map.Entry<String, Sensor<Object>>> set = room.getSensors().entrySet();
+	
+			for(Map.Entry<String, Sensor<Object>> entry : set)
 			{
-				System.out.println("Envoye : " + sensor.getFrame());
+				Sensor<Object> sensor = entry.getValue();
+
 				this.serverSender.submitMessage(sensor.getFrame());
 			}
-    	}
+		}
     }
     
     @Override
@@ -112,7 +112,7 @@ public final class Controller extends Thread
 				Thread.sleep(1000);
 
 				runSimulator();
-				vueSensor.refresh(); //Met à jour la vue 
+				vueSensor.refresh(); //Met ï¿½ jour la vue 
 			}
 		}
 		catch(Exception e)

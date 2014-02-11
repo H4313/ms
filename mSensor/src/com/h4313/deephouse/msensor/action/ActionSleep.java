@@ -14,29 +14,27 @@ import com.h4313.deephouse.sensor.SensorType;
 
 public final class ActionSleep implements Action
 {
-	private List<Sensor<Object>> sensorList;
-
 	private static volatile ActionSleep instance = null;
 	
 	private ActionSleep()
 	{
 		// Initialisation
-		this.sensorList = new ArrayList<Sensor<Object>>();
-		
-		// Process
-		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_BEDROOM);
-			
-		Map<String, Sensor<Object>> sensorList = bedRoom.getSensors();
-
-		// LIGHT OFF
-		Sensor<Object> light = sensorList.get(SensorType.LIGHT);
-		light.setLastValue(false);
-		this.sensorList.add(light);
-		
-		// PRESENCE ON
-		Sensor<Object> presence = sensorList.get(SensorType.PRESENCE);
-		presence.setLastValue(true);
-		this.sensorList.add(presence);
+//		this.sensorList = new ArrayList<Sensor<Object>>();
+//		
+//		// Process
+//		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_BEDROOM);
+//			
+//		Map<String, Sensor<Object>> sensorList = bedRoom.getSensors();
+//
+//		// LIGHT OFF
+//		Sensor<Object> light = sensorList.get(SensorType.LIGHT);
+//		light.setLastValue(false);
+//		this.sensorList.add(light);
+//		
+//		// PRESENCE ON
+//		Sensor<Object> presence = sensorList.get(SensorType.PRESENCE);
+//		presence.setLastValue(true);
+//		this.sensorList.add(presence);
 	}
 	
 	/**
@@ -54,8 +52,11 @@ public final class ActionSleep implements Action
         return ActionSleep.instance;
     }
 	
-	public List<Sensor<Object>> getSensorList()
+	public void run()
 	{
-		return this.sensorList;
+		House.getInstance().updateSensor(SensorType.PRESENCE, (Boolean)false);
+		House.getInstance().updateSensor(SensorType.LIGHT, (Boolean)false);
+		
+		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.PRESENCE, (Boolean)true);
 	}
 }
