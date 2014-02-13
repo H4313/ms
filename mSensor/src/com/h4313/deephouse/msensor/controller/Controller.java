@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
+import com.h4313.deephouse.actuator.Actuator;
+import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
@@ -82,7 +84,32 @@ public final class Controller extends Thread
 			{
 				Sensor<Object> sensor = entry.getValue();
 
-				this.serverSender.submitMessage(sensor.getFrame());
+				this.serverSender.submitMessage(sensor.composeFrame());
+			}
+		}
+    }
+    
+    private void updateSensorValue(Actuator<Object> actuator)
+    {
+    	Set<Map.Entry<String, Sensor<Object>>> set = 
+    	    	actuator.getSensors().entrySet();
+    	
+		for(Map.Entry<String, Sensor<Object>> entry : set)
+		{
+			Sensor<Object> sensor = entry.getValue();
+
+			if(actuator.getType() == ActuatorType.DOORCONTROL
+				|| actuator.getType() == ActuatorType.FLAPCLOSER
+				|| actuator.getType() == ActuatorType.LIGHTCONTROL
+				|| actuator.getType() == ActuatorType.WINDOWCLOSER)
+			{
+				// BOOLEAN
+				sensor.setLastValue(actuator.getLastValue());
+			}
+			else if(actuator.getType() == ActuatorType.RADIATOR)
+			{
+				// TODO : Faire evoluer progressivement la temperature
+				sensor.setLastValue(actuator.getLastValue());
 			}
 		}
     }
@@ -93,21 +120,15 @@ public final class Controller extends Thread
     	String message = null;
 		try
 		{	
-			System.out.println("run controller");
 			while(alive)
-			{
-				System.out.println("message : " + message);
-				
+			{			
 				message = actuatorListener.getMessage();
 				
 				if(message != null)
-				{
-					System.out.println("Message recu : " + message);
-					
+				{					
 					Frame frame = new Frame(message);
-					House.getInstance().updateActuator(frame);
-					
-					// TODO METTRE A JOUR LES CAPTEURS EN FONCTION DES ACTIONNEURS
+					Actuator<Object> actuator = House.getInstance().updateActuator(frame);
+					updateSensorValue(actuator);
 				}
 				else
 				{

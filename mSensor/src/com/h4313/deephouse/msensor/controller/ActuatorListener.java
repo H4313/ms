@@ -46,12 +46,10 @@ public class ActuatorListener implements CallBack
 	
 	public String callBack(String s)
 	{
-		System.out.println("CallBack = " + s);
 		if(record && s != null)
 		{
 			messages.add(s);
 		}
-		System.out.println("Message list = " + messages);
 		
 		return null;
 	}
