@@ -15,6 +15,7 @@ import com.h4313.deephouse.msensor.action.ActionGetUp;
 import com.h4313.deephouse.msensor.action.ActionSleep;
 import com.h4313.deephouse.msensor.action.ActionWorkOffice;
 import com.h4313.deephouse.sensor.Sensor;
+import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.DeepHouseCalendar;
 import com.h4313.deephouse.vue.MainVue;
 
@@ -24,6 +25,8 @@ public final class Controller extends Thread
 	private volatile boolean alive;
 	
 	private static volatile Controller instance = null;
+	
+	private Double previousTime;
 	
 	private ActuatorListener actuatorListener;
 	
@@ -83,7 +86,6 @@ public final class Controller extends Thread
 			for(Map.Entry<String, Sensor<Object>> entry : set)
 			{
 				Sensor<Object> sensor = entry.getValue();
-
 				this.serverSender.submitMessage(sensor.composeFrame());
 			}
 		}
@@ -108,8 +110,14 @@ public final class Controller extends Thread
 			}
 			else if(actuator.getType() == ActuatorType.RADIATOR)
 			{
-				// TODO : Faire evoluer progressivement la temperature
-				sensor.setLastValue(actuator.getLastValue());
+				if(previousTime == null) {
+					previousTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000;
+				}
+				Double deltaTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000 - previousTime;
+				previousTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000;
+				Double deltaTemp = (Double) actuator.getLastValue() - (Double) sensor.getLastValue();
+				Double tempRoom = (Double) sensor.getLastValue() + deltaTemp * (1/(1+Math.exp(-deltaTime/3600))) + 2*Math.random()-1;
+				sensor.setLastValue(tempRoom);
 			}
 		}
     }
@@ -125,18 +133,19 @@ public final class Controller extends Thread
 				message = actuatorListener.getMessage();
 				
 				if(message != null)
-				{					
-					Frame frame = new Frame(message);
-					Actuator<Object> actuator = House.getInstance().updateActuator(frame);
-					updateSensorValue(actuator);
+				{			
+					while(message != null) {
+						Frame frame = new Frame(message);
+						Actuator<Object> actuator = House.getInstance().updateActuator(frame);
+						updateSensorValue(actuator);
+						message = actuatorListener.getMessage();
+					}
 				}
 				else
 				{
 					Thread.sleep(2000);
 				}
-				
-				Thread.sleep(1000);
-
+				Thread.sleep(10);
 				runSimulator();
 				vueSensor.refresh(); // Met a jour la vue 
 			}
