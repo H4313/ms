@@ -9,11 +9,7 @@ import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
-import com.h4313.deephouse.msensor.action.ActionBreakFast;
-import com.h4313.deephouse.msensor.action.ActionGetOut;
-import com.h4313.deephouse.msensor.action.ActionGetUp;
-import com.h4313.deephouse.msensor.action.ActionSleep;
-import com.h4313.deephouse.msensor.action.ActionWorkOffice;
+import com.h4313.deephouse.msensor.action.*;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.DeepHouseCalendar;
@@ -61,22 +57,92 @@ public final class Controller extends Thread
     private void runSimulator()
     {
     	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
-    	switch(cal.get(Calendar.HOUR_OF_DAY))
+    	switch(cal.get(Calendar.DAY_OF_WEEK))
     	{
-    		case 7:
-    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
-    				ActionGetUp.getInstance().run();
-    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
-    				ActionBreakFast.getInstance().run();
-    		break;
-    		case 9: case 10:
-    			ActionWorkOffice.getInstance().run();
-    		break;
-    		case 11:
-    			ActionSleep.getInstance().run();
-    		break;
-    		default:
-    			ActionGetOut.getInstance();
+    		case Calendar.SATURDAY:
+    			switch(cal.get(Calendar.HOUR_OF_DAY))
+		    	{
+		    		case 10:
+		    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+		    				ActionGetUp.getInstance().run();
+		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+		    				ActionBreakFast.getInstance().run();
+		    			else
+		    				ActionGetOut.getInstance(); // Il va faire des courses
+		    		break;
+		    		case 12:
+		    			if(cal.get(Calendar.MINUTE) <= 30)
+		    				ActionCook.getInstance().run();
+		    			else
+			    			ActionDinner.getInstance().run();
+		    		case 13: case 14: case 15: case 16: case 17: case 18: case 19:
+		    			ActionWorkOffice.getInstance().run();
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 20:
+		    			if(cal.get(Calendar.MINUTE) >= 30)
+		    				ActionCook.getInstance().run();
+		    			else
+			    			ActionDinner.getInstance().run();
+		    			
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 21: case 22:
+		    			ActionWatchTv.getInstance().run();
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 23:
+		    			ActionSleep.getInstance().run();
+		    		break;
+		    		default:
+		    	}
+	    	break;
+    		case Calendar.SUNDAY:
+    			switch(cal.get(Calendar.HOUR_OF_DAY))
+		    	{
+		    		case 9:
+		    			ActionGetOut.getInstance();
+		    		break;
+		    		case 22:
+		    			if(cal.get(Calendar.MINUTE) >= 30)
+		    				ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 23:
+		    			ActionSleep.getInstance().run();
+		    		break;
+		    		default:
+		    	}
+	    	break;
+	    	default:
+	    		switch(cal.get(Calendar.HOUR_OF_DAY))
+		    	{
+		    		case 7:
+		    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+		    				ActionGetUp.getInstance().run();
+		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+		    				ActionBreakFast.getInstance().run();
+		    			else
+		    				ActionGetOut.getInstance();
+		    		break;
+		    		case 19:
+		    			if(cal.get(Calendar.MINUTE) >= 30)
+		    				ActionCook.getInstance().run();
+		    			
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 20:
+		    			ActionDinner.getInstance().run();
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 21: case 22:
+		    			ActionWatchTv.getInstance().run();
+		    			ActionWalkAtHome.getInstance().run();
+		    		break;
+		    		case 23:
+		    			ActionSleep.getInstance().run();
+		    		break;
+		    		default:
+		    	}
     	}
 
 		for(Room room : House.getInstance().getRooms())
@@ -100,15 +166,7 @@ public final class Controller extends Thread
 		{
 			Sensor<Object> sensor = entry.getValue();
 
-			if(actuator.getType() == ActuatorType.DOORCONTROL
-				|| actuator.getType() == ActuatorType.FLAPCLOSER
-				|| actuator.getType() == ActuatorType.LIGHTCONTROL
-				|| actuator.getType() == ActuatorType.WINDOWCLOSER)
-			{
-				// BOOLEAN
-				sensor.setLastValue(actuator.getLastValue());
-			}
-			else if(actuator.getType() == ActuatorType.RADIATOR)
+			if(actuator.getType() == ActuatorType.RADIATOR)
 			{
 				if(previousTime == null) {
 					previousTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000;
@@ -118,6 +176,11 @@ public final class Controller extends Thread
 				Double deltaTemp = (Double) actuator.getLastValue() - (Double) sensor.getLastValue();
 				Double tempRoom = (Double) sensor.getLastValue() + deltaTemp * (1/(1+Math.exp(-deltaTime/3600))) + 2*Math.random()-1;
 				sensor.setLastValue(tempRoom);
+			}
+			else
+			{
+				// BOOLEAN
+				sensor.setLastValue(actuator.getLastValue());
 			}
 		}
     }
