@@ -9,6 +9,7 @@ import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.msensor.action.*;
 import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.sensor.SensorType;
@@ -68,7 +69,7 @@ public final class Controller extends Thread
 		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
 		    				ActionBreakFast.getInstance().run();
 		    			else
-		    				ActionGetOut.getInstance(); // Il va faire des courses
+		    				ActionGetOut.getInstance().run(); // Il va faire des courses
 		    		break;
 		    		case 12:
 		    			if(cal.get(Calendar.MINUTE) <= 30)
@@ -101,7 +102,7 @@ public final class Controller extends Thread
     			switch(cal.get(Calendar.HOUR_OF_DAY))
 		    	{
 		    		case 9:
-		    			ActionGetOut.getInstance();
+		    			ActionGetOut.getInstance().run();
 		    		break;
 		    		case 22:
 		    			if(cal.get(Calendar.MINUTE) >= 30)
@@ -122,7 +123,7 @@ public final class Controller extends Thread
 		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
 		    				ActionBreakFast.getInstance().run();
 		    			else
-		    				ActionGetOut.getInstance();
+		    				ActionGetOut.getInstance().run();
 		    		break;
 		    		case 19:
 		    			if(cal.get(Calendar.MINUTE) >= 30)
@@ -152,6 +153,11 @@ public final class Controller extends Thread
 			for(Map.Entry<String, Sensor<Object>> entry : set)
 			{
 				Sensor<Object> sensor = entry.getValue();
+				if(room.getIdRoom() == RoomConstants.ID_BEDROOM && sensor.getType() == SensorType.PRESENCE)
+				{	
+					System.out.println(sensor.getType() + " Presence : " + sensor.getLastValue());
+				}
+				
 				this.serverSender.submitMessage(sensor.composeFrame());
 			}
 		}
