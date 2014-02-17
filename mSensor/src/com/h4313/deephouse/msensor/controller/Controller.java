@@ -153,10 +153,12 @@ public final class Controller extends Thread
 			for(Map.Entry<String, Sensor<Object>> entry : set)
 			{
 				Sensor<Object> sensor = entry.getValue();
-				if(room.getIdRoom() == RoomConstants.ID_BEDROOM && sensor.getType() == SensorType.PRESENCE)
-				{	
-					System.out.println(sensor.getType() + " Presence : " + sensor.getLastValue());
-				}
+				
+				// Affichage d'une valeur d'un capteur specifique
+//				if(room.getIdRoom() == RoomConstants.ID_BEDROOM && sensor.getType() == SensorType.PRESENCE)
+//				{	
+//					System.out.println(sensor.getType() + " Presence : " + sensor.getLastValue());
+//				}
 				
 				this.serverSender.submitMessage(sensor.composeFrame());
 			}
