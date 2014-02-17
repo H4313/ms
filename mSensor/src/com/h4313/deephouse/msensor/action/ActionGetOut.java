@@ -31,8 +31,11 @@ public final class ActionGetOut implements Action
 
     public void run()
     {
-		House.getInstance().updateSensor(SensorType.PRESENCE, (Boolean)false);
-		House.getInstance().updateSensor(RoomConstants.ID_CORRIDOR, SensorType.DOOR, (Boolean)false);
+    	House.getInstance().updateSensor(SensorType.PRESENCE, (Boolean)false);
+    	House.getInstance().updateSensor(SensorType.LIGHT, (Boolean)false);
+    	House.getInstance().updateSensor(SensorType.DOOR, (Boolean)false);
+    	House.getInstance().updateSensor(SensorType.FLAP, (Boolean)false);
+    	House.getInstance().updateSensor(SensorType.WINDOW, (Boolean)false);
     }
 }
 
