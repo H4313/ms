@@ -10,23 +10,6 @@ public final class ActionSleep implements Action
 	
 	private ActionSleep()
 	{
-		// Initialisation
-//		this.sensorList = new ArrayList<Sensor<Object>>();
-//		
-//		// Process
-//		Room bedRoom = House.getInstance().getRooms().get(RoomConstants.ID_BEDROOM);
-//			
-//		Map<String, Sensor<Object>> sensorList = bedRoom.getSensors();
-//
-//		// LIGHT OFF
-//		Sensor<Object> light = sensorList.get(SensorType.LIGHT);
-//		light.setLastValue(false);
-//		this.sensorList.add(light);
-//		
-//		// PRESENCE ON
-//		Sensor<Object> presence = sensorList.get(SensorType.PRESENCE);
-//		presence.setLastValue(true);
-//		this.sensorList.add(presence);
 	}
 	
 	/**
