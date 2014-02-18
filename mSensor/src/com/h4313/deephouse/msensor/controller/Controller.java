@@ -1,7 +1,6 @@
 package com.h4313.deephouse.msensor.controller;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,10 +9,8 @@ import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
-import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.msensor.action.*;
 import com.h4313.deephouse.sensor.Sensor;
-import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.DeepHouseCalendar;
 import com.h4313.deephouse.vue.MainVue;
 
@@ -60,7 +57,7 @@ public final class Controller extends Thread
     {
     	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
     	
-    	if((cal.get(Calendar.MONTH) == Calendar.MARCH && cal.get(Calendar.DAY_OF_MONTH) > 1 && cal.get(Calendar.DAY_OF_MONTH) < 15)
+    	if((cal.get(Calendar.MONTH) == Calendar.MARCH && cal.get(Calendar.DAY_OF_MONTH) >= 2 && cal.get(Calendar.DAY_OF_MONTH) <= 15)
     		|| (cal.get(Calendar.MONTH) == Calendar.MAY && cal.get(Calendar.DAY_OF_MONTH) >= 4 && cal.get(Calendar.DAY_OF_MONTH) <= 9)
     		|| (cal.get(Calendar.MONTH) == Calendar.AUGUST && cal.get(Calendar.DAY_OF_MONTH) >= 11 && cal.get(Calendar.DAY_OF_MONTH) <= 22)
     		|| (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) >= 22 && cal.get(Calendar.DAY_OF_MONTH) <= 29))
