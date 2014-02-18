@@ -1,6 +1,7 @@
 package com.h4313.deephouse.msensor.controller;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,110 +59,121 @@ public final class Controller extends Thread
     private void runSimulator()
     {
     	Calendar cal = DeepHouseCalendar.getInstance().getCalendar();
-    	switch(cal.get(Calendar.DAY_OF_WEEK))
+    	
+    	if((cal.get(Calendar.MONTH) == Calendar.MARCH && cal.get(Calendar.DAY_OF_MONTH) > 1 && cal.get(Calendar.DAY_OF_MONTH) < 15)
+    		|| (cal.get(Calendar.MONTH) == Calendar.MAY && cal.get(Calendar.DAY_OF_MONTH) >= 4 && cal.get(Calendar.DAY_OF_MONTH) <= 9)
+    		|| (cal.get(Calendar.MONTH) == Calendar.AUGUST && cal.get(Calendar.DAY_OF_MONTH) >= 11 && cal.get(Calendar.DAY_OF_MONTH) <= 22)
+    		|| (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) >= 22 && cal.get(Calendar.DAY_OF_MONTH) <= 29))
     	{
-    		case Calendar.SATURDAY:
-    			switch(cal.get(Calendar.HOUR_OF_DAY))
-		    	{
-		    		case 10:
-		    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
-		    				ActionGetUp.getInstance().run();
-		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
-		    				ActionBreakFast.getInstance().run();
-		    			else
-		    				ActionGetOut.getInstance().run(); // Il va faire des courses
-		    		break;
-		    		case 12:
-		    			if(cal.get(Calendar.MINUTE) <= 45)
-		    				ActionCook.getInstance().run();
-		    			else
-			    			ActionLunch.getInstance().run();
-		    		case 13: 
-		    			if(cal.get(Calendar.MINUTE) <= 45)
-		    				ActionLunch.getInstance().run();
-		    			else
-		    				ActionWorkOffice.getInstance().run();
-		    		break;
-		    		case 14: case 15: case 16: case 17: case 18: case 19:
-		    			ActionWorkOffice.getInstance().run();
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 20:
-		    			if(cal.get(Calendar.MINUTE) >= 30)
-		    				ActionCook.getInstance().run();
-		    			else
-			    			ActionDinner.getInstance().run();
-		    			
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 21: case 22:
-		    			ActionWatchTv.getInstance().run();
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 23:
-		    			ActionSleep.getInstance().run();
-		    		break;
-		    		default:
-		    	}
-	    	break;
-    		case Calendar.SUNDAY:
-    			switch(cal.get(Calendar.HOUR_OF_DAY))
-		    	{
-		    		case 9:
-		    			ActionGetOut.getInstance().run();
-		    		break;
-		    		case 22:
-		    			if(cal.get(Calendar.MINUTE) >= 30)
-		    				ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 23:
-		    			ActionSleep.getInstance().run();
-		    		break;
-		    		default:
-		    	}
-	    	break;
-	    	default:
-	    		switch(cal.get(Calendar.HOUR_OF_DAY))
-		    	{
-		    		case 7:
-		    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
-		    				ActionGetUp.getInstance().run();
-		    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
-		    				ActionBreakFast.getInstance().run();
-		    			else
-		    				ActionGetOut.getInstance().run();
-		    		break;
-		    		case 12:
-		    			if(cal.get(Calendar.MINUTE) <= 30)
-		    				ActionCook.getInstance().run();
-		    			else
+    		ActionGetOut.getInstance().run();
+    	}
+    	else
+    	{
+	    	switch(cal.get(Calendar.DAY_OF_WEEK))
+	    	{
+	    		case Calendar.SATURDAY:
+	    			switch(cal.get(Calendar.HOUR_OF_DAY))
+			    	{
+			    		case 10:
+			    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+			    				ActionGetUp.getInstance().run();
+			    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+			    				ActionBreakFast.getInstance().run();
+			    			else
+			    				ActionGetOut.getInstance().run(); // Il va faire des courses
+			    		break;
+			    		case 12:
+			    			if(cal.get(Calendar.MINUTE) <= 45)
+			    				ActionCook.getInstance().run();
+			    			else
+				    			ActionLunch.getInstance().run();
+			    		case 13: 
+			    			if(cal.get(Calendar.MINUTE) <= 45)
+			    				ActionLunch.getInstance().run();
+			    			else
+			    				ActionWorkOffice.getInstance().run();
+			    		break;
+			    		case 14: case 15: case 16: case 17: case 18: case 19:
+			    			ActionWorkOffice.getInstance().run();
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 20:
+			    			if(cal.get(Calendar.MINUTE) >= 30)
+			    				ActionCook.getInstance().run();
+			    			else
+				    			ActionDinner.getInstance().run();
+			    			
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 21: case 22:
+			    			ActionWatchTv.getInstance().run();
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 23:
+			    			ActionSleep.getInstance().run();
+			    		break;
+			    		default:
+			    	}
+		    	break;
+	    		case Calendar.SUNDAY:
+	    			switch(cal.get(Calendar.HOUR_OF_DAY))
+			    	{
+			    		case 9:
+			    			ActionGetOut.getInstance().run();
+			    		break;
+			    		case 22:
+			    			if(cal.get(Calendar.MINUTE) >= 30)
+			    				ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 23:
+			    			ActionSleep.getInstance().run();
+			    		break;
+			    		default:
+			    	}
+		    	break;
+		    	default:
+		    		switch(cal.get(Calendar.HOUR_OF_DAY))
+			    	{
+			    		case 7:
+			    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
+			    				ActionGetUp.getInstance().run();
+			    			else if(cal.get(Calendar.MINUTE) >= 10 && cal.get(Calendar.MINUTE) <= 30)
+			    				ActionBreakFast.getInstance().run();
+			    			else
+			    				ActionGetOut.getInstance().run();
+			    		break;
+			    		case 12:
+			    			if(cal.get(Calendar.MINUTE) <= 30)
+			    				ActionCook.getInstance().run();
+			    			else
+					    		ActionLunch.getInstance().run();
+			    		break;
+			    		case 13:
 				    		ActionLunch.getInstance().run();
-		    		break;
-		    		case 13:
-			    		ActionLunch.getInstance().run();
-		    		break;
-		    		case 14:
-		    			ActionGetOut.getInstance().run();
-		    		break;
-		    		case 19:
-		    			if(cal.get(Calendar.MINUTE) >= 30)
-		    				ActionCook.getInstance().run();
-		    			
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 20:
-		    			ActionDinner.getInstance().run();
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 21: case 22:
-		    			ActionWatchTv.getInstance().run();
-		    			ActionWalkAtHome.getInstance().run();
-		    		break;
-		    		case 23:
-		    			ActionSleep.getInstance().run();
-		    		break;
-		    		default:
-		    	}
+			    		break;
+			    		case 14:
+			    			ActionGetOut.getInstance().run();
+			    		break;
+			    		case 19:
+			    			if(cal.get(Calendar.MINUTE) >= 30)
+			    				ActionCook.getInstance().run();
+			    			
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 20:
+			    			ActionDinner.getInstance().run();
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 21: case 22:
+			    			ActionWatchTv.getInstance().run();
+			    			ActionWalkAtHome.getInstance().run();
+			    		break;
+			    		case 23:
+			    			ActionSleep.getInstance().run();
+			    		break;
+			    		default:
+			    	}
+	    	}
     	}
 
 		for(Room room : House.getInstance().getRooms())
