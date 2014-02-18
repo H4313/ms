@@ -1,7 +1,6 @@
 package com.h4313.deephouse.msensor.action;
 
 import com.h4313.deephouse.housemodel.House;
-import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.sensor.SensorType;
 
 public final class ActionGetOut implements Action

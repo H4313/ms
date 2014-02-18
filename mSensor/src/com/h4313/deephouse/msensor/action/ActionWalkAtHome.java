@@ -2,7 +2,6 @@ package com.h4313.deephouse.msensor.action;
 
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
-import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.Tool;
 
