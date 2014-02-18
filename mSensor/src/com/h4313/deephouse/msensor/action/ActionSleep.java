@@ -33,5 +33,6 @@ public final class ActionSleep implements Action
 		House.getInstance().updateSensor(SensorType.LIGHT, (Boolean)false);
 		
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.PRESENCE, (Boolean)true);
+		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.FLAP, (Boolean)false);
 	}
 }
