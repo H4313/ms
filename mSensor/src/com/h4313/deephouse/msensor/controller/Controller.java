@@ -75,7 +75,7 @@ public final class Controller extends Thread
 		    			if(cal.get(Calendar.MINUTE) <= 30)
 		    				ActionCook.getInstance().run();
 		    			else
-			    			ActionDinner.getInstance().run();
+			    			ActionLunch.getInstance().run();
 		    		case 13: case 14: case 15: case 16: case 17: case 18: case 19:
 		    			ActionWorkOffice.getInstance().run();
 		    			ActionWalkAtHome.getInstance().run();
@@ -125,8 +125,11 @@ public final class Controller extends Thread
 		    			else
 		    				ActionGetOut.getInstance().run();
 		    		break;
-		    		case 12: case 13:
-		    			ActionLunch.getInstance().run();
+		    		case 12:
+		    			ActionCook.getInstance().run();
+		    		break;
+		    		case 13:
+			    		ActionLunch.getInstance().run();
 		    		break;
 		    		case 14:
 		    			ActionGetOut.getInstance().run();
