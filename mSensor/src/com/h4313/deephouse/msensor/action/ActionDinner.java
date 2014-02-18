@@ -31,11 +31,7 @@ public class ActionDinner implements Action
 	{
 		House.getInstance().updateSensor(SensorType.PRESENCE, (Boolean)false);
 		House.getInstance().updateSensor(SensorType.LIGHT, (Boolean)false);
-		House.getInstance().updateSensor(RoomConstants.ID_CORRIDOR, SensorType.PRESENCE, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_CORRIDOR, SensorType.LIGHT, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_LIVING_ROOM, SensorType.PRESENCE, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_LIVING_ROOM, SensorType.LIGHT, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_KITCHEN, SensorType.PRESENCE, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_KITCHEN, SensorType.LIGHT, (Boolean)true);
 	}
 }
