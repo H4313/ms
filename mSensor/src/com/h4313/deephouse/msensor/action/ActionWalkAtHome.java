@@ -33,7 +33,7 @@ public class ActionWalkAtHome
 	{
 		for(Room room : House.getInstance().getRooms())
 		{
-			if(Tool.randInt(0, 50) == 25)
+			if(Tool.randInt(0, 30) == 15)
 			{
 				House.getInstance().updateSensor(room.getIdRoom(), SensorType.PRESENCE, (Boolean)true);
 				House.getInstance().updateSensor(room.getIdRoom(), SensorType.LIGHT, (Boolean)true);
