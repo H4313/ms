@@ -63,6 +63,7 @@ public final class Controller extends Thread
     		|| (cal.get(Calendar.MONTH) == Calendar.AUGUST && cal.get(Calendar.DAY_OF_MONTH) >= 11 && cal.get(Calendar.DAY_OF_MONTH) <= 22)
     		|| (cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) >= 22 && cal.get(Calendar.DAY_OF_MONTH) <= 29))
     	{
+    		// VACANCES
     		ActionGetOut.getInstance().run();
     	}
     	else
@@ -72,6 +73,10 @@ public final class Controller extends Thread
 	    		case Calendar.SATURDAY:
 	    			switch(cal.get(Calendar.HOUR_OF_DAY))
 			    	{
+				    	case 0: case 1: case 2: case 3: case 4:
+			    		case 5: case 6: case 7: case 8: case 9: 
+	    				ActionSleep.getInstance().run();
+	    				break;
 			    		case 10:
 			    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
 			    				ActionGetUp.getInstance().run();
@@ -116,6 +121,10 @@ public final class Controller extends Thread
 	    		case Calendar.SUNDAY:
 	    			switch(cal.get(Calendar.HOUR_OF_DAY))
 			    	{
+			    		case 0: case 1: case 2: case 3: case 4:
+			    		case 5: case 6: case 7: case 8: 
+	    				ActionSleep.getInstance().run();
+	    				break;
 			    		case 9:
 			    			ActionGetOut.getInstance().run();
 			    		break;
@@ -132,6 +141,9 @@ public final class Controller extends Thread
 		    	default:
 		    		switch(cal.get(Calendar.HOUR_OF_DAY))
 			    	{
+				    	case 0: case 1: case 2: case 3: case 4: case 5: case 6:
+	    				ActionSleep.getInstance().run();
+	    				break;
 			    		case 7:
 			    			if(cal.get(Calendar.MINUTE) >= 0 && cal.get(Calendar.MINUTE) <= 10)
 			    				ActionGetUp.getInstance().run();
