@@ -2,6 +2,7 @@ package com.h4313.deephouse.msensor.controller;
 
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.h4313.deephouse.actuator.Actuator;
@@ -209,7 +210,8 @@ public final class Controller extends Thread
 				Double deltaTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000 - previousTime;
 				previousTime = (double) DeepHouseCalendar.getInstance().getCalendar().getTimeInMillis()/1000;
 				Double deltaTemp = (Double) actuator.getLastValue() - (Double) sensor.getLastValue();
-				Double tempRoom = (Double) sensor.getLastValue() + deltaTemp * (1/(1+Math.exp(-deltaTime/3600))) + 2*Math.random()-1;
+				Random randomno = new Random();
+				Double tempRoom = (Double) sensor.getLastValue() + deltaTemp * (1/(1+Math.exp(-deltaTime/3600))) + randomno.nextGaussian()/3;
 				sensor.setLastValue(tempRoom);
 			}
 			else
