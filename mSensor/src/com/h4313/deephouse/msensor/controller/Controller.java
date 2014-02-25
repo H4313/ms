@@ -10,8 +10,10 @@ import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.frame.Frame;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.msensor.action.*;
 import com.h4313.deephouse.sensor.Sensor;
+import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.DeepHouseCalendar;
 import com.h4313.deephouse.vue.MainVue;
 
@@ -334,12 +336,12 @@ public final class Controller extends Thread {
 				Sensor<Object> sensor = entry.getValue();
 
 				// Affichage d'une valeur d'un capteur specifique
-				// if(room.getIdRoom() == RoomConstants.ID_BEDROOM &&
-				// sensor.getType() == SensorType.PRESENCE)
-				// {
-				// System.out.println(sensor.getType() + " Presence : " +
-				// sensor.getLastValue());
-				// }
+//				 if(room.getIdRoom() == RoomConstants.ID_BEDROOM &&
+//				 sensor.getType() == SensorType.PRESENCE)
+//				 {
+//					 System.out.println(sensor.getType() + " : " +
+//					 " piece : " + room.getName() + " : " + sensor.getLastValue());
+//				 }
 
 				this.serverSender.submitMessage(sensor.composeFrame());
 			}
@@ -380,20 +382,24 @@ public final class Controller extends Thread {
 	@Override
 	public void run() {
 		String message = null;
+		Frame frame = null;
+		int i = 0;
 		try {
 			while (alive) {
 				message = actuatorListener.getMessage();
 
 				if (message != null) {
-					while (message != null) {
-						Frame frame = new Frame(message);
+					i = 0;
+					while (message != null && i <= 12) {
+						frame = new Frame(message);
 						Actuator<Object> actuator = House.getInstance()
 								.updateActuator(frame);
 						updateSensorValue(actuator);
 						message = actuatorListener.getMessage();
+						i++;
 					}
 				} else {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				}
 				Thread.sleep(10);
 				runSimulator();
