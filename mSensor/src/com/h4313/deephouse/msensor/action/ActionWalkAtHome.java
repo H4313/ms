@@ -30,13 +30,13 @@ public class ActionWalkAtHome
 	
 	public void run()
 	{
-		for(Room room : House.getInstance().getRooms())
-		{
-			if(Tool.randInt(0, 30) == 15)
-			{
-				House.getInstance().updateSensor(room.getIdRoom(), SensorType.PRESENCE, (Boolean)true);
-				House.getInstance().updateSensor(room.getIdRoom(), SensorType.LIGHT, (Boolean)true);
-			}
-		}
+//		for(Room room : House.getInstance().getRooms())
+//		{
+//			if(Tool.randInt(0, 30) == 15)
+//			{
+//				House.getInstance().updateSensor(room.getIdRoom(), SensorType.PRESENCE, (Boolean)true);
+//				House.getInstance().updateSensor(room.getIdRoom(), SensorType.LIGHT, (Boolean)true);
+//			}
+//		}
 	}
 }

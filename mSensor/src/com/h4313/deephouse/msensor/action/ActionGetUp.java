@@ -31,7 +31,6 @@ public final class ActionGetUp implements Action
 	{
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.FLAP, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.WINDOW, (Boolean)true);
-		
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.PRESENCE, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.LIGHT, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.DOOR, (Boolean)true);
