@@ -355,7 +355,7 @@ public final class Controller extends Thread {
 		for (Map.Entry<String, Sensor<Object>> entry : set) {
 			Sensor<Object> sensor = entry.getValue();
 
-			if (actuator.getType() == ActuatorType.RADIATOR) {
+			if (actuator.getType() == ActuatorType.RADIATOR) { // RADIATOR
 				if (previousTime == null) {
 					previousTime = (double) DeepHouseCalendar.getInstance()
 							.getCalendar().getTimeInMillis() / 1000;
@@ -372,9 +372,8 @@ public final class Controller extends Thread {
 						* (1 / (1 + Math.exp(-deltaTime / 3600)))
 						+ randomno.nextGaussian() / 3;
 				sensor.setLastValue(tempRoom);
-			} else {
-				// BOOLEAN
-				sensor.setLastValue(actuator.getLastValue());
+			} else { // BOOLEAN
+				sensor.setLastValue(!((Boolean)sensor.getLastValue()));
 			}
 		}
 	}
