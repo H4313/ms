@@ -132,7 +132,7 @@ public final class Controller extends Thread {
 							ActionLunch.getInstance().run();
 					}
 				case 13:
-					if (cal.get(Calendar.MINUTE) <= 45) {
+					if (cal.get(Calendar.MINUTE) <= 30) {
 						currentCase = 7;
 
 						if (this.previousCase != currentCase)
@@ -244,23 +244,23 @@ public final class Controller extends Thread {
 					break;
 				case 7:
 					if (cal.get(Calendar.MINUTE) >= 0
-							&& cal.get(Calendar.MINUTE) <= 10) {
+							&& cal.get(Calendar.MINUTE) <= 20) {
 						currentCase = 19;
 
 						if (this.previousCase != currentCase)
 							ActionGetUp.getInstance().run();
-					} else if (cal.get(Calendar.MINUTE) >= 10
-							&& cal.get(Calendar.MINUTE) <= 30) {
+					} else if (cal.get(Calendar.MINUTE) >= 20) {
 						currentCase = 20;
 
 						if (this.previousCase != currentCase)
 							ActionBreakFast.getInstance().run();
-					} else {
-						currentCase = 21;
-
-						if (this.previousCase != currentCase)
-							ActionGetOut.getInstance().run();
 					}
+					break;
+				case 8: case 9: case 10: case 11:
+					currentCase = 21;
+
+					if (this.previousCase != currentCase)
+						ActionGetOut.getInstance().run();
 					break;
 				case 12:
 					if (cal.get(Calendar.MINUTE) <= 30) {
