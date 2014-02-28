@@ -32,6 +32,6 @@ public class ActionLunch
 		House.getInstance().updateSensor(SensorType.PRESENCE, (Boolean)false);
 		House.getInstance().updateSensor(SensorType.LIGHT, (Boolean)false);
 		House.getInstance().updateSensor(RoomConstants.ID_LIVING_ROOM, SensorType.PRESENCE, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_LIVING_ROOM, SensorType.LIGHT, (Boolean)true);
+//		House.getInstance().updateSensor(RoomConstants.ID_LIVING_ROOM, SensorType.LIGHT, (Boolean)true);
 	}
 }
