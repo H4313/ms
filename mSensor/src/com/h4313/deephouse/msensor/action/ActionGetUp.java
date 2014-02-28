@@ -29,10 +29,10 @@ public final class ActionGetUp implements Action
 	
 	public void run()
 	{
-		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.FLAP, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.WINDOW, (Boolean)true);
+//		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.FLAP, (Boolean)true);
+//		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.WINDOW, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.PRESENCE, (Boolean)true);
 		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.LIGHT, (Boolean)true);
-		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.DOOR, (Boolean)true);
+//		House.getInstance().updateSensor(RoomConstants.ID_BEDROOM, SensorType.DOOR, (Boolean)true);
 	}
 }
